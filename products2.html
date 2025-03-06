@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products JSON</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            padding: 20px;
+        }
+        #readButton {
+            padding: 10px 15px;
+            background-color: #000f5c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        #readButton:hover {
+            background-color: #4d42c8;
+        }
+        
+        #result {
+            max-width: 600px;
+            margin: auto;
+            padding: 15px;
+            background: #c9deff;;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            color: rgb(40, 11, 11);
+        }
+        .price {
+            font-style: italic;
+        }
+    </style>
+
+</head>
+<body>
+    <button id="readButton">Read Data</button>
+    <div id="result">
+
+    </div>
+
+    <script>
+        var buttonClick = document.getElementById('readButton');
+        buttonClick.addEventListener('click', openJSON);
+
+        // Get JSON object, display in "result" on button click
+        function openJSON() {
+            console.log("button clicked");
+            $.get("products.json", function(data) {
+                    let output = "";
+                    data.forEach(product => {
+                        output += `
+                            <div class="product">
+                                <h2>${product.name}</h2>
+                                <p class="description">${product.description}</p>
+                                <p class="price">Price: ${product.price}</p>
+                                <p class="category">Categories: ${product.categories.join(", ")}</p>
+                            </div>
+                        `;
+                    });
+                    document.getElementById("result").innerHTML = output;
+                })
+        }
+        
+        
+    </script>
+
+</body>
+</html>
